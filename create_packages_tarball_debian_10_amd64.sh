@@ -4,7 +4,13 @@
 
 set -e
 
+
 GPG_CONFIG_FILE="$HOME/gpg-config"
+GPG_PASSWORD_FILE=$HOME/.gpg_password
+
+[ ! -f $GPG_PASSWORD_FILE ] && GPG_KEY_EXITS=1
+[ ! -z $GPG_KEY_EXITS ] && date +%s | sha256sum | base64 | head -c 32 > $GPG_PASSWORD_FILE
+GPG_PASSWORD=$(cat $HOME/.gpg_password)
 
 cat > $GPG_CONFIG_FILE <<- EOF
 Key-Type: 1
@@ -37,7 +43,7 @@ echo 'deb https://www.ui.com/downloads/unifi/debian stable ubiquiti' | sudo tee 
 
 sudo apt update
 
-gpg --batch --gen-key $GPG_CONFIG_FILE
+[ ! -z $GPG_KEY_EXITS ] && gpg --batch --passphrase-file $GPG_PASSWORD_FILE --pinentry-mode loopback --gen-key $GPG_CONFIG_FILE
 mkdir unifi_packages
 cd unifi_packages
 wget http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u12_amd64.deb
@@ -64,7 +70,7 @@ wget http://security.debian.org/debian-security/pool/updates/main/o/openssl/libs
 ~/unifi-scripts/get-deb-packages-with-deps.sh adoptopenjdk-8-hotspot
 ~/unifi-scripts/get-deb-packages-with-deps.sh unifi
 ~/unifi-scripts/get-deb-packages-with-deps.sh sudo
-gpg --output public.key --armor --export jason.scheunemann@gmail.com
+gpg --batch  --passphrase-file $GPG_PASSWORD_FILE --pinentry-mode loopback --output public.key --armor --export jason.scheunemann@gmail.com
 ~/unifi-scripts/deb-repo.sh
 cd -
 tar czvf unifi_packages.tgz unifi_packages
