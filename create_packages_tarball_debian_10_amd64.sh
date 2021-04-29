@@ -1,10 +1,22 @@
 #!/usr/bin/env bash
 
+GPG_CONFIG_FILE="$HOME/gpg-config"
+
+cat > $GPG_CONFIG_FILE <<- EOF
+Key-Type: 1
+Key-Length: 2048
+Subkey-Type: 1
+Subkey-Length: 2048
+Name-Real: Jason Scheunemann
+Name-Email: jason.scheunemann@gmail.com
+Expire-Date: 0
+EOF
+
 # Install necessary packages
 sudo apt install -y git apt-rdepends
 
 # Clone this repository
-git clone https://github.com/jscheunemann/unifi-scripts.git unifi-scripts
+git clone https://github.com/jscheunemann/unifi-scripts.git ~/unifi-scripts
 
 # Mongo sources
 wget -qO - https://www.mongodb.org/static/pgp/server-3.4.asc |  apt-key add -
@@ -20,7 +32,7 @@ echo 'deb https://www.ui.com/downloads/unifi/debian stable ubiquiti' | sudo tee 
 
 sudo apt update
 
-gpg --gen-key
+gpg --batch --gen-key $GPG_CONFIG_FILE
 mkdir unifi_packages
 cd unifi_packages
 wget http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u12_amd64.deb

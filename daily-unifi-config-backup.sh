@@ -208,6 +208,5 @@ unifi_login
 unifi_backup
 unifi_logout
 
-
 mv *.unf /var/www/html/unifi_backups/
 find /var/www/html/unifi_backups -name "*.unf" -type f -mtime +30 -delete

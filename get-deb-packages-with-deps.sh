@@ -17,7 +17,6 @@
 
  LIST=( $( apt-rdepends $1 | grep -v "^ " ) )
  echo ${LIST[*]}
- read -n1 -r -p "... Packages that will be downloaded (Continue or CTRL+C) ..."
 
  RESULTS=( $( apt-get download ${LIST[*]} |& cut -d' ' -f 8 ) )
  LISTLEN=${#LIST[@]}
