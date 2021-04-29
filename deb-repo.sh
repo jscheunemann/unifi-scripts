@@ -14,6 +14,8 @@ if [ ! "${DPKG_DEV_INSTALLED}" -eq 1 ]; then
     die 1
 fi
 
+GPG_PASSWORD_FILE=$HOME/.gpg_password
+
 dpkg-scanpackages . /dev/null > Packages
 gzip --keep --force -9 Packages
 
@@ -63,4 +65,4 @@ printf ' '$(sha256sum Packages.gz | cut --delimiter=' ' --fields=1)' %16d Packag
 printf '\n '$(sha256sum Packages | cut --delimiter=' ' --fields=1)' %16d Packages' $(wc --bytes Packages | cut --delimiter=' ' --fields=1) >> Release
 
 # Clearsign the Release file (that is, sign it without encrypting it)
-gpg --clearsign --digest-algo SHA512 --local-user $USER -o InRelease Release
+gpg --passphrase-file $GPG_PASSWORD_FILE --pinentry-mode loopback --clearsign --digest-algo SHA512 --local-user $USER -o InRelease Release

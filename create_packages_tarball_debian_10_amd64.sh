@@ -10,7 +10,6 @@ GPG_PASSWORD_FILE=$HOME/.gpg_password
 
 [ ! -f $GPG_PASSWORD_FILE ] && GPG_KEY_EXITS=1
 [ ! -z $GPG_KEY_EXITS ] && date +%s | sha256sum | base64 | head -c 32 > $GPG_PASSWORD_FILE
-GPG_PASSWORD=$(cat $HOME/.gpg_password)
 
 cat > $GPG_CONFIG_FILE <<- EOF
 Key-Type: 1
@@ -70,7 +69,7 @@ wget http://security.debian.org/debian-security/pool/updates/main/o/openssl/libs
 ~/unifi-scripts/get-deb-packages-with-deps.sh adoptopenjdk-8-hotspot
 ~/unifi-scripts/get-deb-packages-with-deps.sh unifi
 ~/unifi-scripts/get-deb-packages-with-deps.sh sudo
-gpg --batch  --passphrase-file $GPG_PASSWORD_FILE --pinentry-mode loopback --output public.key --armor --export jason.scheunemann@gmail.com
+gpg --batch --passphrase-file $GPG_PASSWORD_FILE --pinentry-mode loopback --output public.key --armor --export jason.scheunemann@gmail.com
 ~/unifi-scripts/deb-repo.sh
 cd -
 tar czvf unifi_packages.tgz unifi_packages
