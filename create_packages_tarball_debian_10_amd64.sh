@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 GPG_CONFIG_FILE="$HOME/gpg-config"
 
 cat > $GPG_CONFIG_FILE <<- EOF
@@ -13,13 +15,13 @@ Expire-Date: 0
 EOF
 
 # Install necessary packages
-sudo apt install -y git apt-rdepends
+sudo apt install -y git apt-rdepends gnupg2 dpkg-dev
 
 # Clone this repository
 git clone https://github.com/jscheunemann/unifi-scripts.git ~/unifi-scripts
 
 # Mongo sources
-wget -qO - https://www.mongodb.org/static/pgp/server-3.4.asc |  apt-key add -
+wget -qO - https://www.mongodb.org/static/pgp/server-3.4.asc |  sudo apt-key add -
 echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/3.4 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list
 
 # Java 8
@@ -27,7 +29,7 @@ wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | sudo 
 sudo add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
 
 # Unifi
-apt-key adv --keyserver keyserver.ubuntu.com --recv 06E85760C0A52C50
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 06E85760C0A52C50
 echo 'deb https://www.ui.com/downloads/unifi/debian stable ubiquiti' | sudo tee /etc/apt/sources.list.d/100-ubnt-unifi.list
 
 sudo apt update

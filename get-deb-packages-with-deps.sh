@@ -1,7 +1,8 @@
 #!/bin/bash
- export MAXPARAMETERS=255
 
- function array_contains_find_index() {
+export MAXPARAMETERS=255
+
+function array_contains_find_index() {
      local n=$#
      local i=0
      local value=${!n}
