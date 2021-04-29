@@ -10,7 +10,7 @@ function die() {
 DPKG_DEV_INSTALLED=$(command -v dpkg-architecture | wc -l)
 
 if [ ! "${DPKG_DEV_INSTALLED}" -eq 1 ]; then
-    echo "ERROR: Could not find tdpkg-architecture. Install the dpkg-dev package (apt install dpkg-dev)"
+    echo "ERROR: Could not find dpkg-architecture. Install the dpkg-dev package (apt install dpkg-dev)"
     die 1
 fi
 
