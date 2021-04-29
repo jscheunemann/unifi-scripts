@@ -15,7 +15,8 @@ Expire-Date: 0
 EOF
 
 # Install necessary packages
-sudo apt install -y git apt-rdepends gnupg2 dpkg-dev
+sudo apt update
+sudo apt install -y git apt-rdepends gnupg2 dpkg-dev software-properties-common
 
 # Clone this repository
 git clone https://github.com/jscheunemann/unifi-scripts.git ~/unifi-scripts
