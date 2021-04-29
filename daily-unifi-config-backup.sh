@@ -4,7 +4,7 @@ username=''
 password=''
 baseurl=''
 site=default
-#[ -f ./unifi_sh_env ] &amp;&amp; . ./unifi_sh_env
+#[ -f ./unifi_sh_env ] && . ./unifi_sh_env
 
 cookie=$(mktemp)
 
