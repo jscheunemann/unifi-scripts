@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# wget https://raw.githubusercontent.com/jscheunemann/unifi-scripts/main/create_packages_tarball_debian_10_amd64.sh
+
 set -e
 
 GPG_CONFIG_FILE="$HOME/gpg-config"
