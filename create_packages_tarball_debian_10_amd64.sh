@@ -66,6 +66,6 @@ wget http://security.debian.org/debian-security/pool/updates/main/o/openssl/libs
 ~/unifi-scripts/get-deb-packages-with-deps.sh sudo
 gpg --output public.key --armor --export jason.scheunemann@gmail.com
 ~/unifi-scripts/deb-repo.sh
-cd
+cd -
 tar czvf unifi_packages.tgz unifi_packages
 cat ~/unifi-scripts/create_unifi_installer.sh unifi_packages.tgz > unifi_installer.sh
