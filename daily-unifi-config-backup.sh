@@ -1,10 +1,18 @@
-#!/bin/#!/bin/sh
+#!/bin/bash
 
-username=''
-password=''
-baseurl=''
-site=default
-#[ -f ./unifi_sh_env ] && . ./unifi_sh_env
+# To add to cron ln -s /root/daily-unifi-config-backup.sh /etc/cron.daily/unifi-backup
+
+# /root/.unifi_sh_env
+# username=
+# password=
+# baseurl=
+# site=default
+# ssh_user=
+# ssh_address=
+# ssh_identity=
+# ssh_backup_folder=
+
+[ -f /root/.unifi_sh_env ] && source /root/.unifi_sh_env
 
 cookie=$(mktemp)
 
@@ -210,3 +218,8 @@ unifi_logout
 
 mv *.unf /var/www/html/unifi_backups/
 find /var/www/html/unifi_backups -name "*.unf" -type f -mtime +30 -delete
+
+BACKUP_PATH=/var/www/html/unifi_backups/
+LATEST_FILE=$(ls *.unf -Art $BACKUP_PATH | tail -n 1)
+echo "${BACKUP_PATH}${LATEST_FILE}"
+scp -p -i $ssh_identity "${BACKUP_PATH}${LATEST_FILE}" $ssh_user@$ssh_address:$ssh_backup_folder
